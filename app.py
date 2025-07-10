@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import joblib
 
 st.title("Rain Prediction for Tomorrow – India")
 
@@ -21,7 +22,7 @@ sample = {
     'MinTemp':min_temp, 'MaxTemp':max_temp,
     'Humidity9am':humidity9, 'Humidity3pm':humidity3,
     'Pressure9am':pressure9, 'Pressure3pm':pressure3,
-    'WindSpeed9am':0, 'WindSpeed3pm':0,       # set others to 0/default
+    'WindSpeed9am':0, 'WindSpeed3pm':0,
     'RainToday':int(rain_today),
     'Month':1, 'Day':1, 'DayOfWeek':0,
     'DeltaHum':humidity3 - humidity9,
