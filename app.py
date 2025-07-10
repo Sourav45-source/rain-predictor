@@ -5,8 +5,7 @@ import joblib
 st.title("Rain Prediction for Tomorrow – India")
 
 model = joblib.load("rain_predictor.pkl")
-
-# Minimal feature inputs
+#inputs
 col1, col2 = st.columns(2)
 with col1:
     min_temp   = st.number_input("Min Temp (°C)", 0.0, 50.0, 20.0)
@@ -19,7 +18,6 @@ with col2:
 
 rain_today = st.radio("Rain Today?", ('No', 'Yes')) == 'Yes'
 
-# Build single‑row DataFrame with the same columns as training data
 sample = {
     'MinTemp':min_temp, 'MaxTemp':max_temp,
     'Humidity9am':humidity9, 'Humidity3pm':humidity3,
@@ -31,7 +29,6 @@ sample = {
     'DeltaPress':pressure3 - pressure9,
     'DeltaWind':0, 'AvgTemp':(min_temp+max_temp)/2
 }
-# Include every dummy column expected by the model
 for col in model.get_booster().feature_names:
     if col not in sample:
         sample[col] = 0
@@ -43,7 +40,7 @@ expected_features = ['MinTemp', 'MaxTemp', 'Humidity9am', 'Humidity3pm', 'Pressu
                              'DeltaHum', 'DeltaPress', 'DeltaWind', 'AvgTemp',
                              'Location_Chennai', 'Location_Kolkata', 'Location_Mumbai', 'Location_New Delhi']
 
-X_new = X_new[expected_features]  # Enforce correct order and remove extra columns
+X_new = X_new[expected_features]
 
 if st.button("Predict"):
     prob = model.predict_proba(X_new)[0,1]
