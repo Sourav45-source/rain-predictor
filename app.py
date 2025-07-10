@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import joblib
 
 st.title("Rain Prediction for Tomorrow – India")
 
